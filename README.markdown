@@ -26,10 +26,12 @@ Don't forget to _chmod_ it :
 
 There is couple of variables to change in top of the script :
 
-    SVR_ROOT=$HOME'/Dev/bois_en_jouet/nw/'
-    INCLUDE="*.php"
-    EXCLUDE="*\.git*"
-    OPT="-Po"
+```bash
+SVR_ROOT=$HOME'/Dev/bois_en_jouet/nw/'
+INCLUDE="*.php"
+EXCLUDE="*\.git*"
+OPT="-Po"
+```
 
 Change them to your needs.
 
