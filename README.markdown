@@ -16,7 +16,7 @@ You can keep this script in your root development project directory or copy it i
 
 > Be sure to add `$HOME/bin/` to your `$PATH` and logout+login to your shell to reload it!
 
-Or make an alias or... Whatever...
+Or make an alias or copy/paste or... whatever.
 
 Don't forget to _chmod_ it :
 
@@ -33,7 +33,7 @@ There is couple of variables to change in top of the script :
 
 Change them to your needs.
 
-> `INCLUDE`, `OPT` and `EXCLUDE` are both `grep`'s option you can customize. Do `man grep` for more infos.
+> `INCLUDE`, `EXCLUDE` and `OPT` are all `grep`'s options you can customize. Do `man grep` for more infos.
 
 ### Usage
 
