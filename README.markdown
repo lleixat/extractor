@@ -45,8 +45,9 @@ If _file_ isn't specified ...  ← wip
 
 #### Example
 
-    extractor --class
-    \#\# Extracting 'Classes' :
+    lex@fry:~/Dev/bois_en_jouet/
+    > extractor --class
+    ## Extracting 'Classes' :
 
     /home/lex/Dev/bois_en_jouet/nw/admin/page/footer.php:class
     /home/lex/Dev/bois_en_jouet/nw/admin/page/header.php:class
