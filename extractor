@@ -1,13 +1,14 @@
 #!/bin/sh
-SVR_ROOT=$HOME'/Dev/bois_en_jouet/nw/'
+SVR_ROOT='nw/'
+EXEC='/usr/bin/grep'
 INCLUDE="*.php"
 EXCLUDE="*\.git*"
-OPT="-Po" # man grep for more options
+OPT="n" # man grep for more options
 
 function_construct ()
 {
-	echo -e "## Extracting '$1' :\n"
-	grep $OPT $2 $SVR_ROOT -R --include=$INCLUDE --exclude=$EXCLUDE | sort -u
+	echo "## Extracting '$1' [$2]:"; echo -e "\n"
+	$EXEC -$OPT -Po "$2" $SVR_ROOT -R --include=$INCLUDE --exclude=$EXCLUDE | sort -u
 	echo -e "\n"
 }
 
@@ -53,8 +54,8 @@ do
             PATTERN='class="\K.*?(?=")'
             ;;
         -c|--class)
-            COM="Classes"
-            PATTERN='class \K.*?(?=\n)'
+            COM="PHP Classes"
+            PATTERN='(class \K.*?(?={)|class \K.*?(?=\n)|class \K.*?(?=extends))'
             ;;
         -f|--function)
             COM="function"
@@ -99,7 +100,7 @@ do
         padding="\n\n\n"
     fi
     
-    RES="$RES$padding$(function_construct $COM $PATTERN)"
+    RES="$RES""$padding"$(function_construct "$COM" "${PATTERN}")
 
 done
 
@@ -110,9 +111,9 @@ if [[ -z $COM || -z $PATTERN ]]; then
 fi
 
 if [[ ! -z $OUT ]]; then
-    echo -e "${RES}" >> "$OUT"
+    echo -E "${RES}" >> "$OUT"
 else
-    echo -e "${RES}"
+    echo -E "${RES}"
 fi
 
 exit 0
