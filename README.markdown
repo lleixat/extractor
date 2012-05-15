@@ -48,31 +48,27 @@ If _file_ isn't specified ...  ← wip
 #### Example
 
     lex@fry:~/Dev/bois_en_jouet/
-    > extractor --class
-    ## Extracting 'Classes' :
+    > extractor -c
 
-    /home/lex/Dev/bois_en_jouet/nw/admin/page/footer.php:class
-    /home/lex/Dev/bois_en_jouet/nw/admin/page/header.php:class
-    /home/lex/Dev/bois_en_jouet/nw/admin/plugin/balsa_shell/balsa_shell.js.php:class
-    /home/lex/Dev/bois_en_jouet/nw/admin/plugin/balsa_shell/index.php:class
-    /home/lex/Dev/bois_en_jouet/nw/admin/plugin/bcm/fonction/bcm_category.class.php:class
-    /home/lex/Dev/bois_en_jouet/nw/admin/plugin/bcm/fonction/bcm.class.php:class
-    /home/lex/Dev/bois_en_jouet/nw/admin/plugin/bcm/fonction/bcm_comment.class.php:class
-    /home/lex/Dev/bois_en_jouet/nw/admin/plugin/bcm/fonction/bcm_publication.class.php:class
-    /home/lex/Dev/bois_en_jouet/nw/admin/plugin/bcm/fonction/bcm_shop_category.class.php:class
-    /home/lex/Dev/bois_en_jouet/nw/admin/plugin/bcm/fonction/bcm_tags.class.php:class
-    /home/lex/Dev/bois_en_jouet/nw/admin/plugin/chrysa_cache/gestion_cache.php:class
-    /home/lex/Dev/bois_en_jouet/nw/admin/plugin/controll_panel/controll_panel.php:class
-    /home/lex/Dev/bois_en_jouet/nw/admin/plugin/controll_panel/menu.php:class
-    /home/lex/Dev/bois_en_jouet/nw/admin/plugin/DUI/DUI_main.php:class
-    /home/lex/Dev/bois_en_jouet/nw/admin/plugin/DUI/page/DUI.php:class
-    /home/lex/Dev/bois_en_jouet/nw/admin/plugin/editor/editor.js.php:class
-    /home/lex/Dev/bois_en_jouet/nw/admin/plugin/editor/index.php:class
-    /home/lex/Dev/bois_en_jouet/nw/admin/plugin/editor/menu.php:class
-    /home/lex/Dev/bois_en_jouet/nw/admin/plugin/forum/fonction/forum_categories.class.php:class
-    /home/lex/Dev/bois_en_jouet/nw/admin/plugin/forum/fonction/forum_message.class.php:class
-    /home/lex/Dev/bois_en_jouet/nw/admin/plugin/forum/fonction/forum_thread.class.php:class
-    /home/lex/Dev/bois_en_jouet/nw/admin/plugin/gestion_plugin/gestion.php:class
+    ## Extracting 'PHP Classes' [(class \K.*?(?={)|class \K.*?(?=\n)|class \K.*?(?=extends))]:
+
+    nw/admin/plugin/bcm/fonction/bcm_category.class.php:5:bcm_category 
+    nw/admin/plugin/bcm/fonction/bcm_comment.class.php:4:bcm_comment 
+    nw/admin/plugin/bcm/fonction/bcm_publication.class.php:4:bcm_publication 
+    nw/admin/plugin/bcm/fonction/bcm_shop_category.class.php:5:bcm_shop_category 
+    nw/admin/plugin/bcm/fonction/bcm_tags.class.php:4:bcm_tags 
+    nw/admin/plugin/forum/fonction/forum_categories.class.php:4:forum_categories 
+    nw/admin/plugin/forum/fonction/forum_message.class.php:4:forum_message 
+    nw/admin/plugin/forum/fonction/forum_thread.class.php:4:forum_thread 
+    nw/admin/plugin/media_manager/media_manager.class.php:4:media_manager 
+    nw/admin/plugin/media_manager/mm_folder.class.php:4:mm_folder 
+    nw/admin/plugin/media_manager/mm_media.class.php:4:mm_media 
+    nw/fonction/bcm_cart.class.php:15:bcm_cart 
+    nw/fonction/bcm_category.class.php:5:bcm_category 
+    nw/fonction/bcm_comment.class.php:4:bcm_comment 
+    nw/fonction/bcm_order.class.php:29:bcm_order 
+    nw/fonction/bcm_product.class.php:22:bcm_product 
+    nw/fonction/bcm_publication.class.php:4:bcm_publication 
     ....    
 
 will fetch recursively all _php classes_ on project files. 
