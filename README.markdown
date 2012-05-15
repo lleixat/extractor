@@ -5,7 +5,7 @@ The script `balsa_extractor` is a shell trick which allows you to fetch all sear
 ### Depends on ...
 
 * _core-utils_
-* shell environment like \[sh|bash|dash\]
+* shell environment like \[z|ba|da\]sh
 * _grep_ or _grep-color_ 
 
 ### Installation
@@ -30,7 +30,7 @@ There is couple of variables to change in top of the script :
 SVR_ROOT=$HOME'/Dev/bois_en_jouet/nw/'
 INCLUDE="*.php"
 EXCLUDE="*\.git*"
-OPT="-Po"
+OPT="n"
 ```
 
 Change them to your needs.
@@ -67,7 +67,8 @@ Change them to your needs.
     nw/fonction/bcm_order.class.php:29:bcm_order 
     nw/fonction/bcm_product.class.php:22:bcm_product 
     nw/fonction/bcm_publication.class.php:4:bcm_publication 
-    ....    
+    ....
+    
 
 will fetch recursively all _php classes_ on project files. 
 
@@ -80,11 +81,11 @@ will fetch recursively all _php classes_ on project files.
     -F,  --function-param  Search for php method/functions and parameters.
     -k,  --comments        Search for php comments.
     -o,  --out             Write output in file.
-    -h,  --help            This help.  
+    -h,  --help            This help.
   
 
 > You can retrieve this help doing...
 >     extractor --help
-> ...in your command line interface.
+> ...in your awesome command line interface.
 
 Have fun !
