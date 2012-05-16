@@ -3,8 +3,8 @@ SVR_ROOT='nw/'
 #EXEC='/usr/bin/grep'
 EXEC='/usr/bin/vendor_perl/ack'
 INCLUDE="php"
-OPT="io"             # `ack-grep` --help for more options
-DEBUG="echo -E"      # Comment/uncomment to disable/enable debug
+OPT="i"             # `ack-grep` --help for more options
+#DEBUG="echo -E"      # Comment/uncomment to disable/enable debug
 
 ### Main functions
 _construct ()
@@ -15,13 +15,13 @@ _construct ()
     
     echo -n "## Extracting '$1' [$2]: ##"
     echo -e "\n"
-    $DEBUG $EXEC -"$OPT" "$2" $SVR_ROOT -R --noenv --type=$INCLUDE --flush --group $color
+    $DEBUG $EXEC -"$OPT" $OPT2 "$2" $SVR_ROOT -R --noenv --type=$INCLUDE --flush --group $color
 }
 
 _color_toggle ()
 {
     # Set color only in terminal exec
-    if [[ -z $OUT ]]; then
+    if [[ -z $OUT ]] &&  [[ $OPT2 != "--nocolor" ]]; then
         color="--color"
     fi
 }
@@ -92,27 +92,33 @@ do
     case "$1" in
         -s|--style-class)
             COM="Style Class"
+            OPT2="-o"
             PATTERN='class="\K.*?(?=")'
             ;;
         -c|--class)
             COM="PHP Classes"
+            OPT2="-o"
             PATTERN='(class \K.*?(?={)|class \K.*?(?=\n)|class \K.*?(?=extends))'
             ;;
         -f|--function)
             COM="function"
+            OPT2="-o"
             PATTERN='function \K.*?(?=\()'
             ;;
         -p|--parameters)
             COM="Functions parameters"
+            OPT2="-o"
             PATTERN='function .*\(\K.*?(?=\))'
             ;;
         -F|--function-param)
             COM="Functions with parameters"
+            OPT2="-o"
             PATTERN='.*function \K.*'
             ;;
         -k|--comments)
-            COM="Functions with parameters"
-            PATTERN='\/\*\K.*?(?=(\*\/\n))'
+            COM="Comments"
+            OPT2=""
+            PATTERN='(^#|^\/\/)'
             ;;
         -o|--out)
             OUT=`eval echo $2`
