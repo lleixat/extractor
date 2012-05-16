@@ -3,36 +3,40 @@ SVR_ROOT='nw/'
 #EXEC='/usr/bin/grep'
 EXEC='/usr/bin/vendor_perl/ack'
 INCLUDE="php"
-OPT="io" # `ack-grep` --help for more options
-SHOW_COMMAND="NO" # YES/NO - If "YES" the command is printed before exec
+OPT="io"             # `ack-grep` --help for more options
+DEBUG="echo -E"      # Comment/uncomment to disable/enable debug
 
 ### Main functions
 _construct ()
 {
     # define the output with color or not
     _color_toggle
-
-    echo "## Extracting '$1' [$2]: ##" #; echo -e "\n"
-    if [[ $SHOW_COMMAND = "YES" ]]; then
-        echo -E $EXEC -"$OPT" "$2" $SVR_ROOT -R --noenv --type=$INCLUDE --flush --group $color
-    fi
-    $EXEC -"$OPT" "$2" $SVR_ROOT -R --noenv --type=$INCLUDE --flush --group $color
+    _add_padding
+    
+    echo -n "## Extracting '$1' [$2]: ##"
+    echo -e "\n"
+    $DEBUG $EXEC -"$OPT" "$2" $SVR_ROOT -R --noenv --type=$INCLUDE --flush --group $color
 }
 
 _color_toggle ()
 {
-   if [[ -z $OUT ]]; then
-       color="--color"
-   fi
+    # Set color only in terminal exec
+    if [[ -z $OUT ]]; then
+        color="--color"
+    fi
 }
 
 _add_padding ()
 {
-    printf "\n\n"
+    # Add vertical space only when two options are called  
+    if [[ ! -z $RES ]]; then
+        echo -e "\n\n"
+    fi
 }
 
 _output ()
 {
+    # Define -o option
     if [[ ! -z $OUT ]]; then
         echo "${RES}" >> "$OUT"
     else
