@@ -4,11 +4,17 @@ The script `balsa_extractor` is a shell trick which allows you to fetch all sear
 
 ### Depends on ...
 
-* _core-utils_
+* [ack](http://betterthangrep.com/) (see below)
 * shell environment like \[z|ba|da\]sh
-* _grep_ or _grep-color_ 
+* _core-utils_
+* a computer with all his stuff working (like CPU or mother board... the mouse is not needed)
+* a piece of brain
+* your hands
 
 ### Installation
+
+Before trying the awesome extractor's script be sure to have the _ack_ (or _ack-grep_) Perl script installed on your system. 
+Ack-grep (or ack) is packaged for many distributions so do your _apt-get_ or _yum_ or _yaourt_ thing and don't make me cry... thx.
 
 [Download this repository](http://lab.thomaslleixa.fr/balsa_extractor/repository/archive) or clone it if you prefer.
 
@@ -27,10 +33,11 @@ Don't forget to _chmod_ it :
 There is couple of variables to change in top of the script :
 
 ```bash
-SVR_ROOT=$HOME'/Dev/bois_en_jouet/nw/'
-INCLUDE="*.php"
-EXCLUDE="*\.git*"
-OPT="n"
+SVR_ROOT='nw/'
+EXEC='/usr/bin/vendor_perl/ack' # path to the ack script
+INCLUDE="php"
+OPT="i"                         # `ack` or `ack-grep` --help for more options
+#DEBUG="echo -E"                # Comment/uncomment to disable/enable debug
 ```
 
 Change them to your needs.
@@ -41,36 +48,46 @@ Change them to your needs.
 
 #### General usage:
 
-    extractor [option] [-o file]
+    extractor option [-o file]
   
 #### Example
 
     lex@fry:~/Dev/bois_en_jouet/
-    > extractor -c
+    > extractor -F
+    ## Extracting 'Functions with parameters' [.*function \K.*]: ##
+    
+    ....
+    104:get_stats()
+    112:chgParam($dbName,$host="",$user="",$pass="")
+    127:get_primkey()
 
-    ## Extracting 'PHP Classes' [(class \K.*?(?={)|class \K.*?(?=\n)|class \K.*?(?=extends))]:
+    nw/install/void_mail.php
+    3:mail_de_base($adr,$subject,$message,$from='someone@yopmail.com',$reply='no_reply@yopmail.com')
+    36:mail_plus_piece_jointe($adr,$subject,$message,$pj,$pjn,$from='someone@yopmail.com',$reply='no_reply@yopmail.com')
 
-    nw/admin/plugin/bcm/fonction/bcm_category.class.php:5:bcm_category 
-    nw/admin/plugin/bcm/fonction/bcm_comment.class.php:4:bcm_comment 
-    nw/admin/plugin/bcm/fonction/bcm_publication.class.php:4:bcm_publication 
-    nw/admin/plugin/bcm/fonction/bcm_shop_category.class.php:5:bcm_shop_category 
-    nw/admin/plugin/bcm/fonction/bcm_tags.class.php:4:bcm_tags 
-    nw/admin/plugin/forum/fonction/forum_categories.class.php:4:forum_categories 
-    nw/admin/plugin/forum/fonction/forum_message.class.php:4:forum_message 
-    nw/admin/plugin/forum/fonction/forum_thread.class.php:4:forum_thread 
-    nw/admin/plugin/media_manager/media_manager.class.php:4:media_manager 
-    nw/admin/plugin/media_manager/mm_folder.class.php:4:mm_folder 
-    nw/admin/plugin/media_manager/mm_media.class.php:4:mm_media 
-    nw/fonction/bcm_cart.class.php:15:bcm_cart 
-    nw/fonction/bcm_category.class.php:5:bcm_category 
-    nw/fonction/bcm_comment.class.php:4:bcm_comment 
-    nw/fonction/bcm_order.class.php:29:bcm_order 
-    nw/fonction/bcm_product.class.php:22:bcm_product 
-    nw/fonction/bcm_publication.class.php:4:bcm_publication 
+    nw/fonction/sc_connect.class.php
+    5:get_svc_list()
+    24:__construct($provider='')
+    38:set_conf($arr)
+    60:set_provider($provider)
+    68:redirect($uri='', $type=null, $time='0')
+    83:display_menu()
+    113:sc_notify()
+    123:sc_deco($type, $redirect_uri = '')
+    137:sc_connect_req()
+    233:get_user_info($provider)
+    341:is_oauth_logged($provider)
+
+    nw/fonction/bdd.class.php
+    31:Bdd()
+    45:connect()
+    71:disconnect()
     ....
     
 
-will fetch recursively all _php classes_ on project files. 
+will fetch recursively all _php functions_ on project files. 
+
+Usefull or not ?
 
 ### Options available
 
@@ -80,12 +97,14 @@ will fetch recursively all _php classes_ on project files.
     -p,  --parameters      Search for php method/functions parameters.
     -F,  --function-param  Search for php method/functions and parameters.
     -k,  --comments        Search for php comments.
-    -o,  --out             Write output in file.
+    -o,  --out             Write output in file. Disable color output automagically.
     -h,  --help            This help.
   
 
 > You can retrieve this help doing...
+>   
 >     extractor --help
+>   
 > ...in your awesome command line interface.
 
 Have fun !

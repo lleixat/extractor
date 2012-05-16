@@ -59,7 +59,7 @@ Options :
   -p,  --parameters      Search for php method/functions parameters.
   -F,  --function-param  Search for php method/functions and parameters.
   -k,  --comments        Search for php comments.
-  -o,  --out             Write output in file.
+  -o,  --out             Write output in file. Disable color output automagically.
   -h,  --help            This help.
 
 EOF
