@@ -1,18 +1,46 @@
 #!/bin/sh
 SVR_ROOT='nw/'
-EXEC='/usr/bin/grep'
-INCLUDE="*.php"
-EXCLUDE="*\.git*"
-OPT="n" # man grep for more options
+#EXEC='/usr/bin/grep'
+EXEC='/usr/bin/vendor_perl/ack'
+INCLUDE="php"
+OPT="io" # `ack-grep` --help for more options
+SHOW_COMMAND="NO" # YES/NO - If "YES" the command is printed before exec
 
-function_construct ()
+### Main functions
+_construct ()
 {
-	echo "## Extracting '$1' [$2]:"; echo -e "\n"
-	$EXEC -$OPT -Po "$2" $SVR_ROOT -R --include=$INCLUDE --exclude=$EXCLUDE | sort -u
-	echo -e "\n"
+    # define the output with color or not
+    _color_toggle
+
+    echo "## Extracting '$1' [$2]: ##" #; echo -e "\n"
+    if [[ $SHOW_COMMAND = "YES" ]]; then
+        echo -E $EXEC -"$OPT" "$2" $SVR_ROOT -R --noenv --type=$INCLUDE --flush --group $color
+    fi
+    $EXEC -"$OPT" "$2" $SVR_ROOT -R --noenv --type=$INCLUDE --flush --group $color
 }
 
-show_help ()
+_color_toggle ()
+{
+   if [[ -z $OUT ]]; then
+       color="--color"
+   fi
+}
+
+_add_padding ()
+{
+    printf "\n\n"
+}
+
+_output ()
+{
+    if [[ ! -z $OUT ]]; then
+        echo "${RES}" >> "$OUT"
+    else
+        echo "${RES}"
+    fi
+}
+
+_show_help ()
 {
 saveIFS=$IFS
 IFS='\n' read -r -d '' HELP << 'EOF'
@@ -38,13 +66,22 @@ IFS=$saveIFS
 
 }
 
+_show_error ()
+{
+    echo "$0: error - unrecognized option $1" 1>&2; exit 1
+    _show_help
+}
+
+### Let's go...
+
+# handle options in pseudo GNU style
 if ! opt=$(getopt -o scfpFkho: -l style-class,class,function,parameters,function-param,comments,out,help: -- "$@")
 then
-    show_help
+    _show_help
     exit 1
 fi
 
-set -- $opt 
+set -- $opt
 
 while [ $# -gt 0 ]
 do
@@ -67,7 +104,7 @@ do
             ;;
         -F|--function-param)
             COM="Functions with parameters"
-            PATTERN='function .*\(\K.*?(?=\n)'
+            PATTERN='.*function \K.*'
             ;;
         -k|--comments)
             COM="Functions with parameters"
@@ -78,7 +115,7 @@ do
             shift
             ;;
         -h|--help)
-            show_help
+            _show_help
             exit 0
             ;;
         --)
@@ -86,34 +123,22 @@ do
             break
             ;;
         *)
-            echo "$0: error - unrecognized option $1" 1>&2; exit 1
-            show_help
+            _show_error
             break
             ;;
     esac
-    
+
     shift
-    
-    if [[ -z $RES ]]; then
-        padding=""
-    else
-        padding="\n\n\n"
-    fi
-    
-    RES="$RES""$padding"$(function_construct "$COM" "${PATTERN}")
+
+    RES="$RES"$(_construct "$COM" "${PATTERN}")$(_add_padding)
 
 done
 
 if [[ -z $COM || -z $PATTERN ]]; then
-    echo -e "$0: Please choose an 'scfpFkho' option !\n"
-    show_help
+    _show_error
     exit 0
 fi
 
-if [[ ! -z $OUT ]]; then
-    echo -E "${RES}" >> "$OUT"
-else
-    echo -E "${RES}"
-fi
+_output
 
 exit 0
