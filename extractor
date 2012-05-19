@@ -54,6 +54,7 @@ Usage:  extractor [option] [file]
 
 Options :
   -s,  --style-class     Search for html "class" attribute.
+  -d,  --style-id        Search for html "id" attribute.
   -c,  --class           Search for php classes.
   -f,  --function        Search for php method/function name.
   -p,  --parameters      Search for php method/functions parameters.
@@ -79,7 +80,7 @@ _show_error ()
 ### Let's go...
 
 # handle options in pseudo GNU style
-if ! opt=$(getopt -o scfpFkho: -l style-class,class,function,parameters,function-param,comments,out,help: -- "$@")
+if ! opt=$(getopt -o dscfpFkho: -l style-id,style-class,class,function,parameters,function-param,comments,out,help: -- "$@")
 then
     _show_help
     exit 1
@@ -90,6 +91,11 @@ set -- $opt
 while [ $# -gt 0 ]
 do
     case "$1" in
+        -d|--style-id)
+            COM="Style Id"
+            OPT2="-o"
+            PATTERN='id="\K.*?(?=")'
+            ;;
         -s|--style-class)
             COM="Style Class"
             OPT2="-o"
@@ -98,27 +104,27 @@ do
         -c|--class)
             COM="PHP Classes"
             OPT2="-o"
-            PATTERN='(class \K.*?(?={)|class \K.*?(?=\n)|class \K.*?(?=extends))'
+            PATTERN='^(?!((\s*|\t*)|(\s*\t*)*)(#|\/\/|\*)).*(class \K.*?(?={)|class \K.*?(?=\n)|class \K.*?(?=extends))'
             ;;
         -f|--function)
             COM="function"
             OPT2="-o"
-            PATTERN='function \K.*?(?=\()'
+            PATTERN='^(?!((\s*|\t*)|(\s*\t*)*)(#|\/\/|\*)).*(function \K.*?(?=\())'
             ;;
         -p|--parameters)
             COM="Functions parameters"
             OPT2="-o"
-            PATTERN='function .*\(\K.*?(?=\))'
+            PATTERN='^(?!((\s*|\t*)|(\s*\t*)*)(#|\/\/|\*)).*(function .*\(\K.*?(?=\)))'
             ;;
         -F|--function-param)
             COM="Functions with parameters"
             OPT2="-o"
-            PATTERN='.*function \K.*'
+            PATTERN='^(?!((\s*|\t*)|(\s*\t*)*)(#|\/\/|\*)).*(function \K.*)'
             ;;
         -k|--comments)
             COM="Comments"
             OPT2=""
-            PATTERN='(^#|^\/\/)'
+            PATTERN='(^#|^\/\/|^\*|^\/\*)'
             ;;
         -o|--out)
             OUT=`eval echo $2`
