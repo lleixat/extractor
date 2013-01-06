@@ -1,6 +1,12 @@
 #!/bin/sh
+
+#
+# Author   : Thomas Lleixa
+# Creation : 06 janv. 2013
+# Contact  : <thomas.lleixa@gmail.com>
+#
+
 SVR_ROOT='nw/'
-#EXEC='/usr/bin/grep'
 EXEC='/usr/bin/vendor_perl/ack'
 INCLUDE="php"
 OPT="i"             # `ack-grep` --help for more options
