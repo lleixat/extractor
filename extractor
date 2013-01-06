@@ -6,8 +6,8 @@
 # Contact  : <thomas.lleixa@gmail.com>
 #
 
-SVR_ROOT='nw/'
-EXEC='/usr/bin/vendor_perl/ack'
+SVR_ROOT=''
+EXEC='ack'
 INCLUDE="php"
 OPT="i"             # `ack-grep` --help for more options
 #DEBUG="echo -E"      # Comment/uncomment to disable/enable debug
