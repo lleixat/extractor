@@ -1,6 +1,6 @@
 ### Description
 
-The script `balsa_extractor` is a shell trick which allows you to fetch all searched arguments in on [BalsaCM]() project files.
+This script is a wrapper for Ack which allows you to fetch all searched arguments in on any php project files.
 
 ### Depends on ...
 
@@ -16,7 +16,7 @@ The script `balsa_extractor` is a shell trick which allows you to fetch all sear
 Before trying the awesome extractor's script be sure to have the _ack_ (or _ack-grep_) Perl script installed on your system. 
 Ack-grep (or ack) is packaged for many distributions so do your _apt-get_ or _yum_ or _yaourt_ thing and don't make me cry... thx.
 
-[Download this repository](http://lab.thomaslleixa.fr/balsa_extractor/repository/archive) or clone it if you prefer.
+[Download this repository]() or clone it if you prefer.
 
 You can keep this script in your root development project directory or copy it in your `$HOME/bin/`.
 
