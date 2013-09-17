@@ -1,4 +1,0 @@
-extractor
-=========
-
-Ack wrapper
